@@ -16,11 +16,19 @@ ws.on("connection", function connect(websocket, req){ // 웹소켓에 특정 클
       case "connect_name" : // 사용자 추가
         ALL_WS.forEach(function(element, index){
           if(element.user_id == message.user_id) {
-            element.user_name == message.name;
+            element.user_name = message.name;
           }
         });
         sendAllUsers();
-      break ;
+        break ;
+      case "send_message" : // 채팅메시지 받음 
+        ALL_WS.forEach(function(element, index){
+          // element.ws 클라이언트와의 연결 지점
+          let data = {"code": "chat_message", "msg":message.msg, "sender_name":message.name};
+          element.ws.send(JSON.stringify(data));
+        });
+
+        break;
     }
   });
 
