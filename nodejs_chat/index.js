@@ -9,6 +9,14 @@ ws.on("connection", function connect(websocket, req){ // 웹소켓에 특정 클
   ALL_WS.push({"ws":websocket, "user_id":user_id, "user_name":""});
 
   sendUserId(user_id);
+  websocket.on("close", function close(code, reason){
+    ALL_WS.forEach(function(element, index){
+      if(element.ws == websocket) { // 접속이 끊긴 유저
+        ALL_WS.splice(index, 1);
+      }
+    });
+    sendAllUsers();
+  });
   websocket.on("message", function incoming(message){
     console.log(JSON.parse(message));
     message = JSON.parse(message);
