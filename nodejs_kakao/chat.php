@@ -1,5 +1,5 @@
 <div style="width:100%; clear:both; display:inline-block; height:45px; line-height:45px; background-color:#a9bdce; padding:0px; padding-left:0px; margin:0px">
-	<i class="fa fa-arrow-left" style="font-size:16px; color:black; margin-right:5px"></i><span id="spanChatName">슈퍼맨,스파이더맨</span>
+	<i class="fa fa-arrow-left" style="font-size:16px; color:black; margin-right:5px" onclick="loadMemberList()"></i><span id="spanChatName">슈퍼맨,스파이더맨</span>
 </div>
 <div style="width:100%; clear:both; display:inline-block; height:calc(100% - 95px); background-color:#b2c7d9; padding:0px; padding-left:0pxl margin:0px; overflow-y:auto" id="MAIN_CONTENTS">
 	<div class="divChatTrMy">
@@ -22,6 +22,6 @@
 		<textarea style="width:100%; height:100%; border:0px" name="chat_message" id="chat_message"></textarea>
 	</div>
 	<div style="width:50px; height:100%; background-color:yellow; padding:0px; margin:0px; float:left">
-		<i class="fas fa-angle-right" style="font-size:44px; color:#666666; vertical-align:middle; line-height:44px; margin-top:3px; margin-left:16px"></i>
+		<i class="fas fa-angle-right" style="font-size:44px; color:#666666; vertical-align:middle; line-height:44px; margin-top:3px; margin-left:16px" onclick="sendChat();"></i>
 	</div>
 </div>
