@@ -22,6 +22,9 @@ ws.on("connection", function connection(websocket, req){ //웹소켓에 특정 �
         });
         ROOM_ID = createRoom(message.members);
       break;
+      case "send_chat": //대화 추가
+        sendChat(message.room_id, message.send_memberCode);
+      break;
     }
   });
 
@@ -61,9 +64,9 @@ ws.on("connection", function connection(websocket, req){ //웹소켓에 특정 �
         });
       }
       conn.end();
+      createRoomStep2(ROOM_ID, members);
+      return ROOM_ID;
     });
-    createRoomStep2(ROOM_ID, members);
-    return ROOM_ID;
   }
 
   function createRoomStep2(t_ROOM_ID, t_members) {
@@ -94,5 +97,21 @@ ws.on("connection", function connection(websocket, req){ //웹소켓에 특정 �
     let member_data = {"memberCode": memberCode, "memberAlias": memberAlias, "ws": websocket}
     ALL_USER.push(member_data);
     console.log("LOGIN OK");
+  }
+
+  function sendChat(room_id, send_memberCode) {
+    ALL_ROOM.forEach(function(element, index) {
+      if(element.id == room_id){
+        element.members.forEach(function(member, memberIdx) {
+          ALL_USER.forEach(function(user, userIdx) {
+            if(member.memberCode == user.memberCode) { //현재 접속한 유저에 포함된다면
+              let data = {"code":"arrive_new_message","room_id":room_id};
+              user.ws.send(JSON.stringify(data));
+              console.log("arrive_new_message OK");
+            }
+          });
+        });
+      }
+    });
   }
 });
