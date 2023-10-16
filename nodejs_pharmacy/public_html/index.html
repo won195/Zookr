@@ -11,7 +11,7 @@
     <div style="margin-top:20px; margin-bottom:10px; font-weight:bold;">
       약국 지도
     </div>
-    <div id="map" style="width:100%; height:600px;">
+    <div id="map" style="width:100%; height:1200px;">
 
     </div>
   </body>
@@ -56,7 +56,7 @@
             //옵션 없이 지도 객체를 생성하면 서울 시청을 중심으로 하는 16 레벨의 지도가 생성됩니다.
             let mapOptions = {
               center: new naver.maps.LatLng(XY.lat, XY.lng),
-              zoom: 13
+              zoom: 14
             }
             let map = new naver.maps.Map(mapDiv, mapOptions);
 
@@ -64,30 +64,51 @@
               let dutyName = it.dutyName; // 약국명
               let dutyAddr = it.dutyAddr; // 주소
               let dutyTel1 = it.dutyTel1; // 전화번호
-
+              
               let dutyTime = "";
+              if(it.dutyTime1s & it.dutyTime1c) {
+                dutyTime += "월요일: " + it.dutyTime1s + " ~ " + it.dutyTime1c + "<br>" ;
+              }
+              if(it.dutyTime2s & it.dutyTime2c) {
+                dutyTime += "화요일: " + it.dutyTime2s + " ~ " + it.dutyTime2c + "<br>" ;
+              }
+              if(it.dutyTime3s & it.dutyTime3c) {
+                dutyTime += "수요일: " + it.dutyTime3s + " ~ " + it.dutyTime3c + "<br>" ;
+              }
+              if(it.dutyTime4s & it.dutyTime4c) {
+                dutyTime += "목요일: " + it.dutyTime4s + " ~ " + it.dutyTime4c + "<br>" ;
+              }
+              if(it.dutyTime5s & it.dutyTime5c) {
+                dutyTime += "금요일: " + it.dutyTime5s + " ~ " + it.dutyTime5c + "<br>" ;
+              }
+              if(it.dutyTime6s & it.dutyTime6c) {
+                dutyTime += "토요일: " + it.dutyTime6s + " ~ " + it.dutyTime6c + "<br>" ;
+              }
+              if(it.dutyTime7s & it.dutyTime7c) {
+                dutyTime += "일요일: " + it.dutyTime7s + " ~ " + it.dutyTime7c + "<br>" ;
+              }
+
 
               let pharmach_location = new naver.maps.LatLng(it.wgs84Lat, it.wgs84Lon);
 
-              marker = new naver.maps.Marker({
+              let marker = new naver.maps.Marker({
                 map: map,
-                position: cityhall
+                position: pharmach_location
             });
         
               let contentString = [
                       '<div class="iw_inner">',
-                      '   <h3>서울특별시청</h3>',
-                      '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
-                      '       <img src="'+ HOME_PATH +'/img/example/hi-seoul.jpg" width="55" height="55" alt="서울시청" class="thumb" /><br />',
-                      '       02-120 | 공공,사회기관 &gt; 특별,광역시청<br />',
-                      '       <a href="http://www.seoul.go.kr" target="_blank">www.seoul.go.kr/</a>',
+                      '   <h3>'+dutyName+'</h3>',
+                      '   <p>'+dutyAddr+'<br />',
+                      '       '+dutyTel1+'<br />',
+                      '       '+dutyTime,
                       '   </p>',
                       '</div>'
                   ].join('');
               
               let infowindow = new naver.maps.InfoWindow({
                   content: contentString,
-                  maxWidth: 140,
+                  maxWidth: 440,
                   backgroundColor: "#eee",
                   borderColor: "#2db400",
                   borderWidth: 5,
